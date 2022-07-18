@@ -1,26 +1,16 @@
-import { Button } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Button } from "@mui/material";
 import React from "react"
 
-const Home = () => {
-  return (
-    <div>
-      <div className='tituloHome'>
-        <p>
-          Produtos
-        </p>
-      </div>
-      <div className="BtnAdicionar">
-        <Button
-          variant="outlined"
-          startIcon={<AddCircleOutlineIcon />}
-          onClick={() => {
-            window.location.replace("./AdicionarProdutos");
-          }}
-        >
-          Adicionar Produto
-        </Button>
-        <div className='iconesHome'>
+export function Icons() {
+    return (
+        <div style={{
+            
+            width: '250px', 
+            height: '180px',
+            display: 'flex', 
+            alignItems: 'center'
+        }}>
+           <div>
           <Button
             onClick={() => {
               window.location.replace("./Carrinho");
@@ -57,10 +47,6 @@ const Home = () => {
             </svg>
           </Button>
         </div>
-      </div>
-    </div>
-
-  )
-
+        </div>
+    )
 }
-export default Home

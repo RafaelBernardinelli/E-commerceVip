@@ -1,0 +1,16 @@
+.header {
+    background-color: #00264b;
+    padding: 20px;
+    text-align: center;
+}
+body {
+margin: 0;
+font-family: "Raleway";
+}
+.gridColumn {
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+
+
