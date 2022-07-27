@@ -1,29 +1,34 @@
 import { Link, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { Button, FormControl, Input, InputAdornment, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import AddDTO from "../../data/dtos/AddDTO";
-import { ButtonAdd } from "./components/ButtonAdd";
-import { ImageLoader } from "./components/ImageLoader";
 import { NodeAPI } from "../../data/services/Service";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import React from "react";
-import { FormTextField } from "../../components/Form/components/FormTextField";
 import { Form } from "../../components/Form/Form";
 
 
 const AdicionarProdutos = () => {
   const navigate = useNavigate()
   
-
+  
   async function onSendForm(addDTO: AddDTO) {
+    console.log("testando imagem", typeof addDTO.imagem)
+
     try {
-      await NodeAPI.post(`${process.env.REACT_APP_BASE_URL}/produtos`, addDTO)
+      let produtosData = new FormData() 
+      produtosData.append("marca", addDTO.marca)
+      produtosData.append("imagem", addDTO.imagem)
+      produtosData.append("valor", addDTO.valor.toString())
+      produtosData.append("modelo", addDTO.modelo)
+      produtosData.append("datacadastro", addDTO.dataCadastro)
+      await NodeAPI.post(`${process.env.REACT_APP_BASE_URL}/produtos`, produtosData)
       toast.success('Produto cadastrado com sucesso')
       navigate('/')
+      
     } catch (error: any) {
       const fields: Array<string> = error.response?.data?.errors?.map((error: { param: any }) => error.param)
       if (fields.length) toast.error("Os seguintes campos possuem valores inválidos: " + fields)
       else toast.error("Falha ao cadastrar o produto")
+      console.log(error.response.data)
     }
   }
 

@@ -1,6 +1,6 @@
 import React from "react"
 
 export interface ImageLoaderProps  {
-    image?:string
+    image?:any
     onChangeImage: (element:string) => void
 }

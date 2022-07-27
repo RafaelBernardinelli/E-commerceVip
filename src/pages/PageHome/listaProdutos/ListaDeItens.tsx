@@ -4,25 +4,7 @@ import Item from "../item/Item"
 const mockObject = [
     {
         id: 1,
-        corid: 15,
-        dataCadastro: '2022/12/20',
-        imagem: 'http://localhost:8080/iM3.png',
-        valor: 1500.00,
-        modelo: 'im3',
-        marca: 'intelbras',
-    },
-    {
-        id: 2,
-        corid: 15,
-        dataCadastro: '2022/12/20',
-        imagem: 'http://localhost:8080/iM3.png',
-        valor: 1500.00,
-        modelo: 'im3',
-        marca: 'intelbras',
-    },
-    {
-        id: 3,
-        corid: 15,
+        corid: 17,
         dataCadastro: '2022/12/20',
         imagem: 'http://localhost:8080/iM3.png',
         valor: 1500.00,

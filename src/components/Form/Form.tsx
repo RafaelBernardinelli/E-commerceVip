@@ -8,7 +8,7 @@ import { ImageLoader } from "../../pages/AdicionarProduto/components/ImageLoader
 import { FormTextField } from "./components/FormTextField"
 
 export function Form(props: FormProps) {
-
+    console.log("huhuhu")
     const [modelo, setModelo] = useState<string>("")
     const [marca, setMarca] = useState<string>("")
     const [dataCadastro, setDataCadastro] = useState<string>('')
@@ -17,9 +17,10 @@ export function Form(props: FormProps) {
     const [valor, setValor] = useState<number>(0.0)
 
     async function setValorParaEstados(){
+        console.log("hudwdhuhu")
         if(props.setInitialValues !== undefined){
         const addDTO = await props.setInitialValues()
-        console.log(addDTO)
+       
             if(addDTO !== undefined){
                 console.log(addDTO)     
                 setModelo(addDTO.modelo)
@@ -42,16 +43,16 @@ export function Form(props: FormProps) {
     }
     return (
 
-        <>
-         {(props.setInitialValues !== undefined && 
-         modelo !== undefined &&
-         marca !== undefined &&
-         valor !== undefined &&
-         corid !== undefined &&
-         dataCadastro !== undefined &&
-         imagem !== undefined) || 
-         props.setInitialValues === undefined ? (
-         <>
+        // <>
+        //  {(props.setInitialValues !== undefined && 
+        //  modelo !== undefined &&
+        //  marca !== undefined &&
+        //  valor !== undefined &&
+        //  corid !== undefined &&
+        //  dataCadastro !== undefined &&
+        //  imagem !== undefined) || 
+        //  props.setInitialValues === undefined ? (
+        //  <>
        <div>
             <FormTextField label="Nome" value={modelo} placeholder="Digite o nome do produto" onChange={(value) => setModelo(String(value))} />
             <FormTextField label="Marca" value={marca} placeholder="Digite a marca do produto" onChange={(value) => setMarca(String(value))} />
@@ -88,10 +89,10 @@ export function Form(props: FormProps) {
             }}
              />
         </div>
-        </>
-        ) : (
-            <></>
-          )}
-        </>
+        // </>
+        // ) : (
+        //     <></>
+        //   )}
+        // </>
     )
 }
