@@ -1,19 +1,21 @@
 import { Button } from "@mui/material";
 import React from "react"
+import { useNavigate } from "react-router";
 
-export function Icons() {
+export function Icons(props:any) {
+  const navigate = useNavigate()
     return (
         <div style={{
             
             width: '250px', 
-            height: '180px',
+            height: '170px',
             display: 'flex', 
             alignItems: 'center'
         }}>
            <div>
           <Button
             onClick={() => {
-              window.location.replace("./Carrinho");
+              navigate(`./Carrinho/${props.id}`);
             }}
           >
             <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +26,7 @@ export function Icons() {
 
           <Button
             onClick={() => {
-              window.location.replace("./EditarProdutos");
+              navigate(`./EditarProdutos/${props.id}`);
             }}
           >
             <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">

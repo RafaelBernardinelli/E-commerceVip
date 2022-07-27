@@ -1,16 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500&display=swap');
+
 .header {
     background-color: #00264b;
     padding: 20px;
     text-align: center;
 }
 body {
-margin: 0;
-font-family: "Raleway";
-}
+    margin: 0;
+    font-family: "Raleway";
+    }
 .gridColumn {
     display: grid;
     grid-template-columns: 70% 30%;
 }
+.links {
+    color: #0f4c81;
+}
+
 
 
 

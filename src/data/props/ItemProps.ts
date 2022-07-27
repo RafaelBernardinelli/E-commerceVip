@@ -1,20 +1,20 @@
 export interface ItemProps {
     id: number
-    name: string
+    modelo: string
     marca: string
-    color: string 
+    corid: number
     valor: number
-    image: string
+    imagem: string
 
 }
 
 export interface DataProps {
-    name: string
+    modelo: string
     marca: string
-    color: string 
+    corid: number
     valor: number
 }
 
 export interface imgProps {
-    image: string
+    imagem: string
 }

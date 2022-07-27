@@ -1,23 +1,22 @@
 import { Button } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircle';
 import React from "react"
-import { gridTemplateColumns } from 'styled-system';
-import  Item  from './item/Item';
-import { ListaDeItens } from './listaProdutos/ListaDeItens';
-
+import { fontWeight, gridTemplateColumns } from 'styled-system';
+import  Item  from './Item';
+import { ListaDeItens } from '../listaProdutos/ListaDeItens';
 
 const Home = () => {
   return (
     <div>
       <div style={{ width: '1250px', display: 'grid', gridTemplateColumns: '80% 20%' }}>
-        <div style={{ marginTop: '20px' }}>
+        <div style={{ marginTop: '20px', fontFamily: "Raleway" }}>
           <h1>
             Produtos
           </h1>
         </div>
         <div style={{ marginTop: '40px', textAlign: 'center' }}>
           <Button
-            style={{backgroundColor: '#0000ee' }}
+            style={{backgroundColor: '#0f4c81' }}
             size='large'
             variant="contained"
             startIcon={<AddCircleOutlineIcon />}

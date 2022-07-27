@@ -1,4 +1,4 @@
 export * from '.';
-export * from './EditarProdutos';
-export * from './AdicionarProdutos';
-export * from './Carrinho';
+export * from './EditarProduto/EditarProdutos';
+export * from './AdicionarProduto/AdicionarProdutos';
+export * from './Carrinho/Carrinho';

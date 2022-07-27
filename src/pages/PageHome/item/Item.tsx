@@ -2,11 +2,12 @@ import React from "react";
 import { Data } from "./componentes/Data";
 import { Icons } from "./componentes/Icons";
 import { Imagem } from "./componentes/Imagem";
-import { ItemProps } from "./ItemProps";
+import { ItemProps } from "../../../data/props/ItemProps";
 
 
 
 export default function Item(props: ItemProps) {
+    console.log("ver props" + props)
     return <div style={{
             marginTop: "18px",
             height: '180px',
@@ -14,13 +15,13 @@ export default function Item(props: ItemProps) {
             width: '1250px',
             justifyContent: 'space-evenly'
         }}>
-            <Imagem image={props.image}/>
+            <Imagem imagem={props.imagem}/>
             <Data 
             marca={props.marca} 
-            color={props.color} 
+            corid={props.corid} 
             valor={props.valor} 
-            name={props.name} />
-            <Icons />
+            modelo={props.modelo} />
+            <Icons id={props.id}/>
         </div>
     
 }
