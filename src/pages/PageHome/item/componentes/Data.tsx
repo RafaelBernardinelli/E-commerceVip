@@ -12,8 +12,8 @@ export function Data (props: DataProps){
         }}>
             <p style={{fontSize: '24px', marginLeft: '20px', fontWeight: 'bold', lineHeight: "2px"}}>{props.modelo}</p>
             <p style={{fontSize: '20px', marginLeft: '20px'}}>{props.marca}</p>
-            <p style={{fontSize: '32px', marginLeft: '20px', color: '#0f4c81', fontWeight: 'bold', lineHeight: "0px"}}>R$ {props.valor},00</p>
-            <p style={{fontSize: '20px', marginLeft: '20px', lineHeight: "5px"}}>Cor: {props.corid}</p>
+            <p style={{fontSize: '32px', marginLeft: '20px', color: '#0f4c81', fontWeight: 'bold', lineHeight: "0px"}}>R$ {props.valor}</p>
+            <p style={{fontSize: '20px', marginLeft: '20px', lineHeight: "5px"}}>Cor: {props.cor.nome}</p>
         </div>
     )
 }

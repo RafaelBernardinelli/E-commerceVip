@@ -5,7 +5,7 @@ import placeholderImage from './../../../img/placeholder.png'
 import DownloadIcon from '@mui/icons-material/Download';
 import { ImageLoaderProps } from "../../../data/props/ImageLoaderProps";
 
-
+//funcao que realiza o tratamento do campo de imagem
 
 export function ImageLoader(props: ImageLoaderProps) {
     const fileAnchor: any = useRef()
@@ -18,24 +18,23 @@ export function ImageLoader(props: ImageLoaderProps) {
             setRenderedImage(objectURL)
         }
     }, [image])
-
+//Abrir campo file
     function openFileExplorer(){
         fileAnchor.current.click()
     }
     function onSelectFile(event:any){
+        console.log(event.target.files[0])
         setImage(event.target.files[0])
-        props.onChangeImage(event.target.files[0].name)
+        props.onChangeImage(event.target.files[0])
     }
 
     return (
-        <div style={{ display:'flex', marginBottom: '30px', alignItems: 'center'}}>
+        <div style={{ display:'flex', marginBottom: '30px', marginTop: '20px',alignItems: 'center'}}>
             <div style={{width: '130px',height: '130px'}}>
-            <img src={renderedImage === undefined ? placeholderImage: renderedImage} alt="" style={{width: '100%', height: '100%', objectFit:'contain', border: '1px dashed grey', borderRadius: '5px'}}></img>
-            </div>
+            <Button variant="outlined" onClick={openFileExplorer} style={{width: '130px',height: '130px', objectFit: 'contain', border: 'none'}}>
+            <img src={renderedImage === undefined ? placeholderImage: renderedImage} alt="" style={{width: '100%', height: '100%', border: '1px dashed grey', borderRadius: '5px', position: 'absolute'}}></img>
+            
             <input ref={fileAnchor} type='file' onChange={onSelectFile} style={{display:'none'}}/>
-            <div style={{justifyContent: 'center', marginLeft: '20px'}}>
-            <Button variant="outlined" onClick={openFileExplorer} style={{color:'grey', border: '1px solid grey'}} startIcon={<DownloadIcon />}>
-                Carregar
             </Button>
             </div>
         </div>

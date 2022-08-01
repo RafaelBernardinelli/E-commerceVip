@@ -8,6 +8,9 @@
 body {
     margin: 0;
     font-family: "Raleway";
+    -webkit-font-feature-settings: "lnum"; 
+    -moz-font-feature-settings: "lnum"; 
+    font-feature-settings: "lnum";
     }
 .gridColumn {
     display: grid;

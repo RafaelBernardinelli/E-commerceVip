@@ -1,24 +1,32 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
+import { toast } from "react-toastify"
+import AddDTO from "../../../data/dtos/AddDTO"
+import { NodeAPI } from "../../../data/services/Service"
 import Item from "../item/Item"
 
-const mockObject = [
-    {
-        id: 1,
-        corid: 17,
-        dataCadastro: '2022/12/20',
-        imagem: 'http://localhost:8080/iM3.png',
-        valor: 1500.00,
-        modelo: 'im3',
-        marca: 'intelbras',
-    },
-]
+export function ListaDeItens () {
+    const [produtos, setProdutos] = useState<Array<AddDTO>>()
 
-export function ListaDeItens(){
+
+async function getListProducts(){
+    try{
+        const response = await NodeAPI.get(`${process.env.REACT_APP_BASE_URL}/produtos`)
+        setProdutos(response.data)
+    }catch(error){
+        toast.error("Erro na busca de produtos")
+    }
+}
+
+useEffect(()=>{
+    getListProducts()
+}, [])
+
     return (
     <div style={{height: '600px',width: '1280px', overflowY: 'scroll' }}>
-            {mockObject.map((element, index) => {
-                return <Item key={index} id={element.id}
-                corid={element.corid} 
+            {produtos?.map((element, index) => {
+                return <Item key={index} 
+                id={Number(element.id)}
+                cor={element.cor} 
                 imagem={element.imagem}
                 valor={element.valor} 
                 modelo={element.modelo}
@@ -31,3 +39,4 @@ export function ListaDeItens(){
         </div>
     )
 }
+

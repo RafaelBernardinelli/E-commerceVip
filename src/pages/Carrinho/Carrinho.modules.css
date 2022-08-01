@@ -1,0 +1,84 @@
+#mostrar{
+    display: none;
+    border: 1px solid;
+    padding: 10px;
+    flex-direction: column;
+    position: relative;
+    margin-top: 10px;
+    font-size: 16.5px;
+    position: absolute;
+  }
+  #passar_mouse {
+    padding-top: 5px;
+  }
+  
+  #passar_mouse:hover #mostrar{
+    display:block;
+    }
+.contador {
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin: 2px;
+  padding: 7px 15px 7px 15px;
+}
+.btnPagar {
+  width: "325px";
+  margin-top: "25px";
+  border-radius: "5px";
+  background-color: "#0f4c81";
+   color: #d3fac1
+}
+.grid1 {
+  background-color: "";
+  margin-top: 20px;
+  border-radius: 5px;
+  display: flex;
+  border: solid 1px #B2B2B2;
+  height:250px;
+  width: 750px;
+  flex-direction: column;
+  padding: 25px;
+}
+.grid2 {
+  height: 150px;
+  width: 750px;
+  display: flex;
+}
+.grid3 {
+  width: 150px;
+  height: 150px;
+  display: flex;
+}
+.grid4 {
+  width: 600px;
+  height: 150px;
+  display: flex;
+}
+.btnQtd {
+  font-weight: bold;
+  font-size: 20px;
+  height: 70px;
+  width: 750px;
+  display: flex;
+  margin-top: 25px;
+  align-items: center;
+}
+.pagamento {
+  margin-top: 10px;
+  height: 160px;
+  border: solid 1px #039500;
+  border-radius: 10px;
+  text-align: center;
+  color: #039500;
+  font-size: 18px;
+  font-weight: bold;
+}
+.pagar {
+  background-color: #f5f5f5;
+  margin-top: 20px;
+  height: 290px;
+  border-radius: 5px;
+  padding: 10px 24px 0 24px;
+  font-size: 20px;
+  font-weight: bold;
+}

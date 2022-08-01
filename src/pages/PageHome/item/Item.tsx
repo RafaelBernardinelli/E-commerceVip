@@ -18,7 +18,7 @@ export default function Item(props: ItemProps) {
             <Imagem imagem={props.imagem}/>
             <Data 
             marca={props.marca} 
-            corid={props.corid} 
+            cor={props.cor} 
             valor={props.valor} 
             modelo={props.modelo} />
             <Icons id={props.id}/>
