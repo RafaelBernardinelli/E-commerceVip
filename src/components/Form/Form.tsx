@@ -21,18 +21,13 @@ import '../../pages/style.css'
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup"
-import {validateSchema } from "../../common/Functions";
+import { currencyMask, toNumber, validateSchema } from "../../common/Functions";
 import { ErrorMessage } from '@hookform/error-message';
+import { validateBrand, validateModel } from "./FormValidation";
 
-type FormInputs = {
-  modelo: string
-}
-const schema = yup.object().shape({
-  imagem: yup.string().required("a foto é obrigatoria"),
-  modelo: yup.string().required("A modelo é requerida")
-}).required()
 //funcao que seta os valores no formulario
 export function Form(props: FormProps) {
+  
   // const [errors, setErrors] = useState<any>({})
   const [id, setId] = useState<number>();
   const [modelo, setModelo] = useState<string>("");
@@ -46,22 +41,8 @@ export function Form(props: FormProps) {
     id: 0,
     nome: "",
   });
-  const [valor, setValor] = useState<number>(0);
-  const { register, handleSubmit, setError, formState: { errors } } = useForm({
-    defaultValues: {
-      modelo: '',
-      marca: '',
-      valor: '',
-      cor: '',
-      datacadastro: ''
-    }
-  });
-  useEffect(() => {
-    setError("modelo", {
-      type: "modelo",
-      message: "O modelo é obrigatório"
-    });
-  }, [])
+  const [valor, setValor] = useState<string>('');
+
   async function setValorParaEstados() {
     if (props.setInitialValues !== undefined) {
       const addDTO = await props.setInitialValues();
@@ -76,7 +57,7 @@ export function Form(props: FormProps) {
           nome: "",
         });
         console.log(addDTO);
-        setValor(addDTO.valor);
+        setValor(String(addDTO.valor));
       }
     }
   }
@@ -85,8 +66,13 @@ export function Form(props: FormProps) {
     if (props.setInitialValues !== undefined) setValorParaEstados();
   }, []);
 
+  useEffect(() => {
+    setModelo(validateModel(modelo))
+    setMarca(validateBrand(marca))
+  }, [modelo, valor, marca]);
+
   function createAddDTO(): AddDTO {
-    return new AddDTO(cor, datacadastro, imagem, valor, modelo, marca, id);
+    return new AddDTO(cor, datacadastro, imagem, Number(toNumber(valor)), modelo, marca, id);
   }
   return (
     <>
@@ -99,39 +85,45 @@ export function Form(props: FormProps) {
      imagem !== undefined) ||
      props.setInitialValues === undefined ? (
      <>
-     <form onSubmit = {handleSubmit((onSubmit: any) => {
-          console.log(onSubmit)
-        })}>
+     <form onSubmit = {((e) => {
+      e.preventDefault()
+     props.formHandle(createAddDTO());
+     })}> 
     <div className="modelo">
       <FormTextField
-      {...register("modelo")}
+        autoComplete="off"
         label="Nome"
         name="modelo"
         value={modelo}
         placeholder="Digite o nome do produto"  
         autoFocus
+        error={modelo === ""}
         onChange={(value) => setModelo(String(value))}
-      />{errors.modelo && <span>{errors.modelo.message}</span>}
+      />
       </div>
       <div>
       <FormTextField
+        autoComplete="off"
         name="marca"
         label="Marca"
         value={marca}
+        error={marca === ""}
         placeholder="Digite a marca do produto"
         onChange={(value) => setMarca(String(value))}
       />
        <FormControl fullWidth sx={{ width: '30%', marginBottom: '20px' }}>
           <InputLabel htmlFor="outlined-adornment-amount"> Valor</InputLabel>
           <OutlinedInput
-            // {...register("valor")}
             id="outlined-adornment-amount"
             value={valor}
-            onChange={(valor) => {setValor(Number(valor.target.value))
-            console.log(valor)
-            }}
-            startAdornment={<InputAdornment position="start"><p style={{color: 'black'}}>R$</p></InputAdornment>}
+            onChange={(valor) => {
+              setValor(currencyMask(valor.target.value))}}
             label="valor"
+            placeholder="0,00"
+            autoComplete="off"
+            required
+            error={valor === ""}
+            startAdornment={<InputAdornment position="start"><p>R$</p></InputAdornment>}
           />
         </FormControl>
       <div>
@@ -141,6 +133,7 @@ export function Form(props: FormProps) {
             labelId="demo-simple-select-helper-label"
             value={cor?.id || "-"}
             label="Cor"
+            required
             style={{ width: "260px", marginBottom: "20px" }}
             onChange={(event: any) => {
               setColor((prev) => ({ ...prev, id: event.target.value }));
@@ -174,9 +167,10 @@ export function Form(props: FormProps) {
       />
       {/* {errors.imagem && <span></span>} */}
       <ButtonAdd
+      type={"submit"}
         label={props.formButton}
         onClick={() => {
-        props.formHandle(createAddDTO());
+        
         }}
       />
     </div>

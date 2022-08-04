@@ -13,13 +13,15 @@ export default class AddDTO {
   corid?: number;
 
   convertToFormData() {
+    
     const produtosData = new FormData()
     produtosData.append("marca", this.marca);     
-    produtosData.append("imagem", this.imagem)
+    if(this.imagem) produtosData.append("imagem", this.imagem)
     produtosData.append("valor", this.valor.toString())
     produtosData.append("modelo", this.modelo)
     produtosData.append("datacadastro", this.datacadastro)
     produtosData.append("corid", this.cor.id.toString());
+    console.log("deu ruim", this.valor)
     return produtosData;
   }
   constructor(
@@ -37,6 +39,7 @@ export default class AddDTO {
   {
     this.cor = cor;
     this.datacadastro = datacadastro;
+    console.log('imagem', imagem)
     if (imagem && (imagem as any).lastModified) this.imagem = imagem
     this.valor = valor;
     this.modelo = modelo;

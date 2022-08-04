@@ -8,6 +8,12 @@ export function FormTextField(props: FormTextFieldProps) {
                 autoFocus={props.autoFocus ?  true : undefined}
                 value={props.value}
                 name={props.name}
+                autoComplete={props.autoComplete}
+                InputLabelProps = {
+                    {
+                        shrink: true
+                    }
+                }
                 onChange={(event) => {
                     props.onChange(event.target.value)
                 }}
@@ -16,6 +22,7 @@ export function FormTextField(props: FormTextFieldProps) {
                 id="outlined-basic"
                 label={props.label}
                 variant="outlined"
+                error={props.error}
                 required
             />
         </div>

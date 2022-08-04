@@ -234,8 +234,8 @@ export function Carrinho() {
         <div></div>
         {cedulas && btncor && (
           <div className="pagamento">
-            <h2>Pagamento realizado com sucesso!</h2>
             <div className="cedulas">
+            <h2>Pagamento realizado com sucesso!</h2>
               <p className="cedulas">Este pagamento foi realizado com:</p>
               {Object.entries(openPagar).map((it) => {
                 if (it[1] > 0)

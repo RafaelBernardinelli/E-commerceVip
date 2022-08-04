@@ -10,6 +10,7 @@ export function ButtonAdd (props: ButtonAddProps) {
           display: 'flex',
         }}>
         <Button onClick={props.onClick} variant="contained"
+          type={props.type}
           style={{ width: '260px', height: '50px', borderRadius: '5px', backgroundColor: '#0f4c81' }}>
             {props.label}
         </Button>

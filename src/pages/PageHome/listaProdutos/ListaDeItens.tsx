@@ -10,9 +10,7 @@ async function getListProducts(){
     try{
         const response = await NodeAPI.get(`${process.env.REACT_APP_BASE_URL}/produtos`)
         setProdutos(response.data)
-        toast.success("Lista de Produtos atual")
     }catch(error){
-        toast.error("Erro na busca de produtos")
     }
 }
 useEffect(()=>{
