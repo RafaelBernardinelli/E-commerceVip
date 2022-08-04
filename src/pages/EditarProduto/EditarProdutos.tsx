@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import AddDTO from "../../data/dtos/AddDTO";
-import { NodeAPI } from "../../data/services/Service";
+import { FormDataAPI, NodeAPI } from "../../data/services/Service";
 import { AxiosResponse } from "axios";
 import { Form } from "../../components/Form/Form";
 import { toast } from "react-toastify";
@@ -14,11 +14,11 @@ const EditarProdutos = () => {
     try {
       const id = addDTO.id;
       delete addDTO.id;
-      await NodeAPI.put(
+      await FormDataAPI.put(
         `${process.env.REACT_APP_BASE_URL}/produtos/${id}`,
-        addDTO
+        addDTO.convertToFormData()
       );
-      toast.success("Produto atualizado com sucesso");
+      toast.success("Produto editado com sucesso");
       navigate("/");
     } catch (error: any) {
       const fields: Array<string> = error.response?.data?.errors?.map(
@@ -26,7 +26,7 @@ const EditarProdutos = () => {
       );
       if (fields && fields.length)
         toast.error("Os seguintes campos possuem valores inválidos: " + fields);
-      else toast.error("Falha ao atualizar o produto");
+      else toast.error("Falha ao editar o produto");
       console.log(error.response.data);
     }
   }
@@ -55,10 +55,10 @@ const EditarProdutos = () => {
               to="./EditarProdutos"
               style={{ textDecoration: "none", color: "#0f4c81" }}
             >
-              Editar Produtos
+              Editar Produto
             </Link>
           </nav>
-          <h1>Editar Produtos</h1>
+          <h1>Editar Produto</h1>
         </div>
       </div>
       <Form

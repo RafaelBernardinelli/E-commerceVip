@@ -1,12 +1,10 @@
 
 import { Button } from "@mui/material"
 import React, { useEffect, useRef, useState } from "react"
-import placeholderImage from './../../../img/placeholder.png'
-import DownloadIcon from '@mui/icons-material/Download';
+import placeholderImage from './../../../img/placeholderr.png'
 import { ImageLoaderProps } from "../../../data/props/ImageLoaderProps";
 
 //funcao que realiza o tratamento do campo de imagem
-
 export function ImageLoader(props: ImageLoaderProps) {
     const fileAnchor: any = useRef()
     const [image, setImage] =  useState()
@@ -18,7 +16,6 @@ export function ImageLoader(props: ImageLoaderProps) {
             setRenderedImage(objectURL)
         }
     }, [image])
-//Abrir campo file
     function openFileExplorer(){
         fileAnchor.current.click()
     }
@@ -27,7 +24,6 @@ export function ImageLoader(props: ImageLoaderProps) {
         setImage(event.target.files[0])
         props.onChangeImage(event.target.files[0])
     }
-
     return (
         <div style={{ display:'flex', marginBottom: '30px', marginTop: '20px',alignItems: 'center'}}>
             <div style={{width: '130px',height: '130px'}}>

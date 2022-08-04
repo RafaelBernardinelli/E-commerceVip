@@ -1,5 +1,4 @@
 //Transporte de dados para os componentes
-
 export default class AddDTO {
   id?: number;
   cor: {
@@ -7,12 +6,22 @@ export default class AddDTO {
     nome: string;
   };
   datacadastro: string;
-  imagem: string;
+  imagem!: string;
   valor: number;
   modelo: string;
   marca: string;
   corid?: number;
 
+  convertToFormData() {
+    const produtosData = new FormData()
+    produtosData.append("marca", this.marca);     
+    produtosData.append("imagem", this.imagem)
+    produtosData.append("valor", this.valor.toString())
+    produtosData.append("modelo", this.modelo)
+    produtosData.append("datacadastro", this.datacadastro)
+    produtosData.append("corid", this.cor.id.toString());
+    return produtosData;
+  }
   constructor(
     cor: {
       id: number;
@@ -25,11 +34,10 @@ export default class AddDTO {
     marca: string,
     id?: number
   ) 
-  
   {
     this.cor = cor;
     this.datacadastro = datacadastro;
-    this.imagem = imagem;
+    if (imagem && (imagem as any).lastModified) this.imagem = imagem
     this.valor = valor;
     this.modelo = modelo;
     this.marca = marca;

@@ -1,12 +1,12 @@
 #mostrar{
     display: none;
-    border: 1px solid;
-    padding: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
+    padding: 13px 10px 10px 10px;
     flex-direction: column;
-    position: relative;
     margin-top: 10px;
     font-size: 16.5px;
     position: absolute;
+    background-color: white;
   }
   #passar_mouse {
     padding-top: 5px;
@@ -20,13 +20,6 @@
   border-radius: 5px;
   margin: 2px;
   padding: 7px 15px 7px 15px;
-}
-.btnPagar {
-  width: "325px";
-  margin-top: "25px";
-  border-radius: "5px";
-  background-color: "#0f4c81";
-   color: #d3fac1
 }
 .grid1 {
   background-color: "";
@@ -48,6 +41,7 @@
   width: 150px;
   height: 150px;
   display: flex;
+  justify-content: center;
 }
 .grid4 {
   width: 600px;
@@ -65,7 +59,7 @@
 }
 .pagamento {
   margin-top: 10px;
-  height: 160px;
+  height: 180px;
   border: solid 1px #039500;
   border-radius: 10px;
   text-align: center;
@@ -81,4 +75,30 @@
   padding: 10px 24px 0 24px;
   font-size: 20px;
   font-weight: bold;
+}
+.cedulas {
+  font-size: 16px;
+}
+.cedulas p {
+  line-height: 12px;
+}
+.pagamento h2 {
+  font-weight: bold;
+  font-size: 18px;
+}
+.valorTotal {
+    display: flex;
+    justify-content: space-between;
+    line-height: 2px;
+}
+.divFrete {
+    display: flex;
+    justify-content: space-between;
+    line-height: 2px;
+    margin-bottom: 20px;
+}
+.divSubtotal {
+    display: flex;
+    justify-content: space-between;
+    line-height: 2px;
 }

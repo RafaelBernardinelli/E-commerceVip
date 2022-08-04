@@ -9,7 +9,6 @@ export interface ItemProps {
   valor: number;
   imagem: string;
 }
-
 export interface DataProps {
   modelo: string;
   marca: string;
@@ -19,7 +18,6 @@ export interface DataProps {
   };
   valor: number;
 }
-
 export interface imgProps {
   imagem: string;
 }

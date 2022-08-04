@@ -1,20 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
 import "./Carrinho.modules.css";
 import { NodeAPI } from "../../data/services/Service";
+import { toCurrency } from "../../common/Functions";
 
 export function Carrinho() {
   const [cont, setCont] = useState<number>(1);
-  const [itens, setItens] = useState<string>("");
   const [modelo, setModelo] = useState<string>("");
-  const [valor, setValor] = useState<number>(0);
+  const [valor, setValor] = useState<number>(0.0);
   const [imagem, setImagem] = useState<string>("");
   const [cor, setCor] = useState<{
     id: number;
     nome: string;
-  }>
-  ({
+  }>({
     id: 0,
     nome: "",
   });
@@ -22,21 +21,19 @@ export function Carrinho() {
   const [openPagar, setOpenPagar] = useState<object>({});
   const [cedulas, setCedulas] = useState<boolean>(false);
   const { id } = useParams();
-  const [btncor, setBtnColor] = useState<boolean>(false)
+  const [btncor, setBtnColor] = useState<boolean>(false);
 
   async function getCarrinhoById() {
     try {
-      const resposta = await NodeAPI.get(
-        `${process.env.REACT_APP_BASE_URL}/produtos/${id}`
-      );
+      const resposta = await NodeAPI.get(`${process.env.REACT_APP_BASE_URL}/produtos/${id}`);
+      
       setModelo(resposta.data.modelo);
       setValor(resposta.data.valor);
       setImagem(resposta.data.imagem);
       setMarca(resposta.data.marca);
 
-      await NodeAPI.get(
-        `${process.env.REACT_APP_BASE_URL}/cor/${resposta.data.corid}`
-      ).then((resposta) => {
+      await NodeAPI.get(`${process.env.REACT_APP_BASE_URL}/cor/${resposta.data.corid}`)
+      .then((resposta) => {
         setCor(resposta.data);
       });
     } catch (error) {
@@ -46,16 +43,12 @@ export function Carrinho() {
   useEffect(() => {
     getCarrinhoById();
   }, []);
-  useEffect(() => {
-    console.log(cor);
-  }, [cor]);
 
   let subtotal = 0;
   function soma() {
-    return subtotal = valor * cont;
+    return (subtotal = valor * cont);
   }
   function total() {
-    //total é subtotal mais frete
     return (soma() * 10) / 100 + soma();
   }
   function frete() {
@@ -70,33 +63,26 @@ export function Carrinho() {
     }
   }
   function pagamento(total: number) {
-    console.log(total);
+    console.log("total", total);
     setCedulas(true);
-    const counterCedulas = {
-      200: 0,
-      100: 0,
-      50: 0,
-      20: 0,
-      10: 0,
-      5: 0,
-      2: 0,
+    const counterCedulas: any = {
+      200: 0, 100: 0, 50: 0, 20: 0, 10: 0, 5: 0, 2: 0,
     };
+    const cedulas = Object.keys(counterCedulas).sort(
+      (a, b) => Number(b) - Number(a)
+    );
     var resto = total;
-    for (var c = Object.keys(counterCedulas).length - 1; c >= 0; c--) {
-      const currentCedula = Number(Object.keys(counterCedulas)[c]);
-      const div = Math.floor(resto / currentCedula);
-      // counterCedulas[currentCedula] += div;
-      resto -= div * currentCedula;
+    for (var i = 0; i < cedulas.length; i++) {
+      const cedulaAtual = Number(cedulas[i]);
+      const div = Math.floor(resto / cedulaAtual);
+      counterCedulas[cedulaAtual] += div;
+      resto -= div * cedulaAtual;
     }
     setOpenPagar(counterCedulas);
     return resto;
   }
-
   return (
-    <div
-      className="font"
-      style={{ backgroundColor: "", width: "1250px", marginTop: "30px" }}
-    >
+    <div className="font" style={{width: "1250px", marginTop: "30px" }}>
       <header>
         <nav className="links">
           <Link to="../" style={{ textDecoration: "none", color: "#0f4c81" }}>
@@ -112,7 +98,7 @@ export function Carrinho() {
         </nav>
       </header>
 
-      <div className="gridColumn" style={{ backgroundColor: "" }}>
+      <div className="gridColumn">
         <div>
           <h1>Carrinho</h1>
         </div>
@@ -124,10 +110,9 @@ export function Carrinho() {
         <div className="grid1">
           <div>
             <div className="grid2">
-              <div className="grid3"
-              >
+              <div className="grid3">
                 <div>
-                  <img src={imagem} style={{ objectFit: "cover" }}></img>
+                  <img src={imagem}></img>
                 </div>
               </div>
               <div className="grid4">
@@ -135,12 +120,11 @@ export function Carrinho() {
                   <h3>{modelo}</h3>
                   <p>{marca}</p>
                   <p>Cor: {cor.nome}</p>
-              </div>
+                </div>
               </div>
             </div>
             <hr />
-            <div className="btnQtd"
-            >
+            <div className="btnQtd">
               <div
                 style={{
                   backgroundColor: "",
@@ -189,31 +173,17 @@ export function Carrinho() {
                   </svg>
                 </Button>
               </div>
-              <p>R$ {soma()},00</p>
+              <p>R$ {toCurrency(soma())}</p>
             </div>
           </div>
         </div>
-        <div
-          className="pagar">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              lineHeight: "2px",
-            }}
-          >
+        <div className="pagar">
+          <div className="divSubtotal">
             <p>Subtotal ({item(cont)})</p>
-            <p>R$ {soma()},00 </p>
+            <p>R$ {toCurrency(soma())} </p>
           </div>
           <hr />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              lineHeight: "2px",
-              marginBottom: "20px",
-            }}
-          >
+          <div className="divFrete" >
             <div id="passar_mouse">
               Frete <span></span>
               <svg
@@ -235,32 +205,19 @@ export function Carrinho() {
               </svg>
               <div id="mostrar">Valor do frete: 10% do valor do produto</div>
             </div>
-            <p>R$ {frete()},00</p>
+            <p>R$ {toCurrency(frete())}</p>
           </div>
           <hr />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              lineHeight: "2px",
-            }}
-          >
+          <div className="valorTotal">
             <p>Valor Total</p>
-            <p>R$ {total()},00</p>
+            <p>R$ {toCurrency(total())}</p>
           </div>
-          <div
-            style={{
-              textAlign: "center",
-              borderRadius: "10px",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Button className=""
-             onClick={() =>{
-              setBtnColor(!btncor)
-              pagamento(total())  
-            }}
+          <div>
+            <Button
+              onClick={(event) => {
+                pagamento(total());
+                setBtnColor(!btncor);
+              }}
               style={{
                 width: "325px",
                 marginTop: "25px",
@@ -275,19 +232,19 @@ export function Carrinho() {
           </div>
         </div>
         <div></div>
-        {cedulas && (
-        <div className="pagamento"
-        >
-          <p>Pagamento realizado com sucesso!</p>
-          <h2>
-            {Object.entries(openPagar).map((it) => {
-              if (it[1] > 0) return <p>{`Este pagamento foi realizado com ${it[1]} cédulas de R$${it[0]}`}</p>;
-            })}
-          </h2>
-        </div>
-         )}
+        {cedulas && btncor && (
+          <div className="pagamento">
+            <h2>Pagamento realizado com sucesso!</h2>
+            <div className="cedulas">
+              <p className="cedulas">Este pagamento foi realizado com:</p>
+              {Object.entries(openPagar).map((it) => {
+                if (it[1] > 0)
+                  return <p>{` ${it[1]} cédulas de R$${it[0]},00`}</p>;
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </div>
-  );
-}
+  )};
 export default Carrinho;

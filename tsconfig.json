@@ -27,5 +27,5 @@
   },
   "include": [
     "src"
-  ]
+, "src/setupTests.ts", "src/index.tsx", "scripts/react-app-env.d.ts"  ]
 }

@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import AddDTO from "../../../../data/dtos/AddDTO";
@@ -7,16 +7,17 @@ import { NodeAPI } from "../../../../data/services/Service";
 
 export function Icons(props: any) {
   const navigate = useNavigate();
-
   async function onDelete(addDTO: AddDTO) {
     try {
       await NodeAPI.delete(
         `${process.env.REACT_APP_BASE_URL}/produtos/${addDTO}`
       );
-      toast.success("Veículo deletado com sucesso");
-      navigate("/");
+      toast.success("Produto deletado com sucesso");
+      setTimeout(() => {
+        window.location.href="/";
+      }, 1000);     
     } catch (error) {
-      toast.error("Falha ao deletar um veículo");
+      toast.error("Falha ao deletar o produto");
       console.log(error);
     }
   }
@@ -55,7 +56,6 @@ export function Icons(props: any) {
             />
           </svg>
         </Button>
-
         <Button
           onClick={() => {
             navigate(`./EditarProdutos/${props.id}`);

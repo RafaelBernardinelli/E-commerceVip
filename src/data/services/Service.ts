@@ -27,5 +27,4 @@ const FormDataAPI:AxiosInstance = axios.create({
             Allow: 'GET, POST, PUT, DELETE, OPTIONS, HEAD',
     },
 })
-
-export { NodeAPI }
+export { NodeAPI, FormDataAPI }
