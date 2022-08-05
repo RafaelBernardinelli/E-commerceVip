@@ -9,8 +9,8 @@ export default function Item(props: ItemProps) {
   return (
     <div
       style={{
-        marginTop: "18px",
-        height: "180px",
+        marginTop: "20px",
+        height: "190px",
         display: "flex",
         width: "1250px",
         justifyContent: "space-evenly",

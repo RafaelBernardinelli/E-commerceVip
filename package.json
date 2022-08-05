@@ -20,6 +20,7 @@
     "@types/react-dom": "^18.0.6",
     "axios": "^0.27.2",
     "date-fns": "^2.29.1",
+    "formik": "^2.2.9",
     "install": "^0.13.0",
     "moment": "^2.29.4",
     "mysql": "^2.18.1",

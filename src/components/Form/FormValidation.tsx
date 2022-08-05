@@ -1,4 +1,7 @@
-export function validateModel (modelo: string): string {
+import moment from "moment"
+import AddDTO from "../../data/dtos/AddDTO"
+
+export function validateModel (modelo?: string): string {
     let validModel = ''
     if(modelo && modelo.length) {
         validModel = modelo.replace(/[^a-zA-Z0-9â ]+/, '')
@@ -6,7 +9,7 @@ export function validateModel (modelo: string): string {
       }
       return validModel
 }
-export function validateBrand (marca: string): string {
+export function validateBrand (marca?: string): string {
     let validMarca = ''
     if(marca && marca.length) {
         validMarca = marca.replace(/[^a-zA-Z0-9â ]+/, '')
@@ -16,6 +19,15 @@ export function validateBrand (marca: string): string {
       return validMarca
 }
 
-export function validateImage(type: string) {
+export function validateImage(type?: string) {
     return type === 'image/png' ? true : false
+}
+
+export function validateDTO(produto: AddDTO) {
+    let fields: Array<string> = new Array<string>()
+    if (produto.modelo.length < 3) fields.push(' Modelo')
+    if (produto.marca.length < 3) fields.push(' Marca')
+    if (produto.valor < 50) fields.push(' Valor')
+    if (produto.cor.nome === "-" && produto.cor.id !== 17 && produto.cor.id !== 19 && produto.cor.id !== 21) fields.push(' Cor')
+    return fields
 }

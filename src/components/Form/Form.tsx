@@ -6,6 +6,7 @@ import {
   TextField,
   InputAdornment,
   OutlinedInput,
+  FormHelperText,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import AddDTO from "../../data/dtos/AddDTO";
@@ -18,30 +19,30 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import moment from "moment";
 import '../../pages/style.css'
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup"
-import { currencyMask, toNumber, validateSchema } from "../../common/Functions";
-import { ErrorMessage } from '@hookform/error-message';
-import { validateBrand, validateModel } from "./FormValidation";
+import { validateBrand, validateDTO, validateModel } from "./FormValidation";
+import { currencyMask, toNumber} from "../../common/Functions";
+import { toast } from "react-toastify";
 
-//funcao que seta os valores no formulario
 export function Form(props: FormProps) {
   
-  // const [errors, setErrors] = useState<any>({})
   const [id, setId] = useState<number>();
   const [modelo, setModelo] = useState<string>("");
+  const [modeloError, setModeloError] = useState<boolean>(false);
   const [marca, setMarca] = useState<string>("");
+  const [marcaError, setMarcaError] = useState<boolean>(false);
   const [datacadastro, setDataCadastro] = useState<string>(moment(new Date()).format('YYYY-MM-DD'));
+  const [datacadastroError, setDataCadastroError] = useState<boolean>(false);
   const [imagem, setImage] = useState<any>();
   const [cor, setColor] = useState<{
     id: number;
     nome: string;
   }>({
     id: 0,
-    nome: "",
+    nome: "-",
   });
-  const [valor, setValor] = useState<string>('');
+  const [corError, setCorError] = useState<boolean>(false);
+  const [valor, setValor] = useState<string>("");
+  const [valorError, setValorError] = useState<boolean>(false);
 
   async function setValorParaEstados() {
     if (props.setInitialValues !== undefined) {
@@ -54,7 +55,7 @@ export function Form(props: FormProps) {
         setImage(addDTO.imagem);
         setColor({
           id: addDTO.corid!,
-          nome: "",
+          nome: "-",
         });
         console.log(addDTO);
         setValor(String(addDTO.valor));
@@ -66,16 +67,34 @@ export function Form(props: FormProps) {
     if (props.setInitialValues !== undefined) setValorParaEstados();
   }, []);
 
+useEffect(() => {
+  setModeloError(false)
+}, [modelo])
+useEffect(() => {
+  setMarcaError(false)
+}, [marca])
+useEffect(() => {
+    setCorError(false)
+}, [cor])
+useEffect(() => {
+  setValorError(false)
+}, [valor])
+
   useEffect(() => {
     setModelo(validateModel(modelo))
     setMarca(validateBrand(marca))
   }, [modelo, valor, marca]);
 
   function createAddDTO(): AddDTO {
+    if(modelo === "") setModeloError(true)
+    if(marca === "") setMarcaError(true)
+    if(valor === "") setValorError(true)
+    if(cor && cor.nome === '-' && cor.id !== 17 && cor.id !== 19 && cor.id !== 21) setCorError(true)
     return new AddDTO(cor, datacadastro, imagem, Number(toNumber(valor)), modelo, marca, id);
   }
   return (
     <>
+    
      {(props.setInitialValues !== undefined &&
      modelo !== undefined &&
      marca !== undefined &&
@@ -85,19 +104,16 @@ export function Form(props: FormProps) {
      imagem !== undefined) ||
      props.setInitialValues === undefined ? (
      <>
-     <form onSubmit = {((e) => {
-      e.preventDefault()
-     props.formHandle(createAddDTO());
-     })}> 
+ 
     <div className="modelo">
       <FormTextField
         autoComplete="off"
-        label="Nome"
+        label="Modelo"
         name="modelo"
         value={modelo}
-        placeholder="Digite o nome do produto"  
+        placeholder="Digite o modelo do produto"  
         autoFocus
-        error={modelo === ""}
+        error={modeloError}
         onChange={(value) => setModelo(String(value))}
       />
       </div>
@@ -107,12 +123,12 @@ export function Form(props: FormProps) {
         name="marca"
         label="Marca"
         value={marca}
-        error={marca === ""}
+        error={marcaError}
         placeholder="Digite a marca do produto"
         onChange={(value) => setMarca(String(value))}
       />
        <FormControl fullWidth sx={{ width: '30%', marginBottom: '20px' }}>
-          <InputLabel htmlFor="outlined-adornment-amount"> Valor</InputLabel>
+          <InputLabel htmlFor="outlined-adornment-amount">Valor</InputLabel>
           <OutlinedInput
             id="outlined-adornment-amount"
             value={valor}
@@ -122,7 +138,7 @@ export function Form(props: FormProps) {
             placeholder="0,00"
             autoComplete="off"
             required
-            error={valor === ""}
+            error={valorError}
             startAdornment={<InputAdornment position="start"><p>R$</p></InputAdornment>}
           />
         </FormControl>
@@ -133,13 +149,14 @@ export function Form(props: FormProps) {
             labelId="demo-simple-select-helper-label"
             value={cor?.id || "-"}
             label="Cor"
-            required
+            required={true}
+            error={corError}
             style={{ width: "260px", marginBottom: "20px" }}
             onChange={(event: any) => {
               setColor((prev) => ({ ...prev, id: event.target.value }));
             }}
           >
-            <MenuItem value="-">Selecione uma cor</MenuItem>
+            <MenuItem value="-"><em>Selecione uma cor</em></MenuItem>
             <MenuItem value={17}>Cinza</MenuItem>
             <MenuItem value={19}>Branco</MenuItem>
             <MenuItem value={21}>Preto</MenuItem>
@@ -155,6 +172,7 @@ export function Form(props: FormProps) {
         }}
           label="Data de cadastro"
           inputFormat="dd/MM/yyyy"
+          mask="__/__/____"
           value={moment(datacadastro, 'YYYY-MM-DD').toDate()}
           renderInput={(params) => <TextField {...params} />}
         />
@@ -162,19 +180,19 @@ export function Form(props: FormProps) {
       </div>
       <ImageLoader
         image={imagem}
-        // {...register("imagem")}
         onChangeImage={(element: string) => setImage(element)}
       />
-      {/* {errors.imagem && <span></span>} */}
       <ButtonAdd
       type={"submit"}
         label={props.formButton}
         onClick={() => {
-        
+          const addDTO = createAddDTO()
+                const fields = validateDTO(addDTO)
+                if (fields && fields.length) toast.error(`Os seguintes campos não foram preenchidos ou possuem valores invalidos: ${fields.map((value: any) => value)}`)
+                else props.formHandle(addDTO)
         }}
       />
     </div>
-    </form>
      </>
      ) : (
          <></>

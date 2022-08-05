@@ -22,7 +22,6 @@
   padding: 7px 15px 7px 15px;
 }
 .grid1 {
-  background-color: "";
   margin-top: 20px;
   border-radius: 5px;
   display: flex;
@@ -32,7 +31,7 @@
   flex-direction: column;
   padding: 25px;
 }
-.grid2 {
+.grid2 {  
   height: 150px;
   width: 750px;
   display: flex;
@@ -67,12 +66,10 @@
   font-size: 18px;
   font-weight: bold;
   width: 100%;
-
-height: inherit;
-position: relative;
-left: 10px;
-margin: 0;
-overflow: visible;
+  height: inherit;
+  position: relative;
+  margin-top: 10px;
+  overflow: visible;
 
 }
 .pagar {

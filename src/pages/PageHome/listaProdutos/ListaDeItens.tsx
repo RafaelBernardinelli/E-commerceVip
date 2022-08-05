@@ -17,7 +17,7 @@ useEffect(()=>{
     getListProducts()
 }, [])
     return (
-    <div style={{height: '600px',width: '1280px', overflowY: 'scroll' }}>
+    <div style={{height: '630px',width: '1280px'}}>
             {produtos?.map((element, index) => {
                 return <Item key={index} 
                 id={Number(element.id)}
@@ -27,8 +27,7 @@ useEffect(()=>{
                 modelo={element.modelo}
                 marca={element.marca} 
                 />
-            })}
-            
+            })}  
         </div>
     )
 }

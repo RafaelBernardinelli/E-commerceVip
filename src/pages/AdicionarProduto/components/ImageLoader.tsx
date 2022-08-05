@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 import placeholderImage from './../../../img/placeholderr.png'
 import { ImageLoaderProps } from "../../../data/props/ImageLoaderProps";
 import { validateImage } from "../../../components/Form/FormValidation";
+import { error } from "console";
 
 //funcao que realiza o tratamento do campo de imagem
 export function ImageLoader(props: ImageLoaderProps) {
@@ -25,7 +26,6 @@ export function ImageLoader(props: ImageLoaderProps) {
         fileAnchor.current.click()
     }
     function onSelectFile(event:any){
-        console.log(event.target.files[0])
         setImage(event.target.files[0])
         props.onChangeImage(event.target.files[0])
     }

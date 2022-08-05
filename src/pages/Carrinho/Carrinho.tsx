@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import "./Carrinho.modules.css";
 import { NodeAPI } from "../../data/services/Service";
 import { toCurrency } from "../../common/Functions";
+import { toast } from "react-toastify";
 
 export function Carrinho() {
   const [cont, setCont] = useState<number>(1);
@@ -127,7 +128,6 @@ export function Carrinho() {
             <div className="btnQtd">
               <div
                 style={{
-                  backgroundColor: "",
                   width: "150px",
                   textAlign: "center",
                 }}
@@ -138,6 +138,8 @@ export function Carrinho() {
                 <Button
                   onClick={() => {
                     if (cont > 1) setCont(cont - 1);
+                    setBtnColor(!btncor);
+                    pagamento(total());
                   }}
                 >
                   <svg
@@ -154,8 +156,9 @@ export function Carrinho() {
                 <p className="contador">{cont}</p>
                 <Button
                   onClick={() => {
-                    setCont(cont + 1);
-                    console.log(setCont);
+                    setCont(cont + 1) 
+                    setBtnColor(!btncor);
+                    pagamento(total());
                   }}
                 >
                   <svg
@@ -193,7 +196,7 @@ export function Carrinho() {
                 viewBox="0 0 17 17"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-              >
+                >
                 <path
                   d="M17 8.5C17 13.1944 13.1944 17 8.5 17C3.80558 17 0 13.1944 0 8.5C0 3.80558 3.80558 0 8.5 0C13.1944 0 17 3.80558 17 8.5Z"
                   fill="#FF6363"
@@ -217,6 +220,7 @@ export function Carrinho() {
               onClick={(event) => {
                 pagamento(total());
                 setBtnColor(!btncor);
+                if(!btncor) {toast.success("Pagamento realizado com sucesso")}
               }}
               style={{
                 width: "325px",
@@ -235,11 +239,14 @@ export function Carrinho() {
         {cedulas && btncor && (
           <div className="pagamento">
             <div className="cedulas">
-            <h2>Pagamento realizado com sucesso!</h2>
               <p className="cedulas">Este pagamento foi realizado com:</p>
               {Object.entries(openPagar).map((it) => {
                 if (it[1] > 0)
-                  return <p>{` ${it[1]} cédulas de R$${it[0]},00`}</p>;
+                if (it[1] > 1) {
+                  return <p>{`${it[1]} cédulas de R$${it[0]},00`}</p>;
+                }else{
+                  return <p>{`${it[1]} cédula de R$${it[0]},00`}</p>;
+                }
               })}
             </div>
           </div>
