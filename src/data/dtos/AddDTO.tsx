@@ -18,10 +18,10 @@ export default class AddDTO {
     produtosData.append("marca", this.marca);     
     if(this.imagem) produtosData.append("imagem", this.imagem)
     produtosData.append("valor", this.valor.toString())
+    console.log(this.valor)
     produtosData.append("modelo", this.modelo)
     produtosData.append("datacadastro", this.datacadastro)
     produtosData.append("corid", this.cor.id.toString());
-    console.log("deu ruim", this.valor)
     return produtosData;
   }
   constructor(

@@ -58,7 +58,7 @@ export function Form(props: FormProps) {
           nome: "-",
         });
         console.log(addDTO);
-        setValor(String(addDTO.valor));
+        setValor(String(addDTO.valor).replace(".", ","));
       }
     }
   }
@@ -172,7 +172,6 @@ useEffect(() => {
         }}
           label="Data de cadastro"
           inputFormat="dd/MM/yyyy"
-          mask="__/__/____"
           value={moment(datacadastro, 'YYYY-MM-DD').toDate()}
           renderInput={(params) => <TextField {...params} />}
         />

@@ -1,6 +1,5 @@
 import { ValidationError } from "yup"
 import { OptionalObjectSchema } from "yup/lib/object"
-import AddDTO from "../data/dtos/AddDTO"
 
 export function toCurrency(value: string | number) {
     const newValue = typeof value === "string" ? value : value.toFixed(2)

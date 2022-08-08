@@ -3,13 +3,13 @@ import { Button } from "@mui/material"
 import React, { useEffect, useRef, useState } from "react"
 import placeholderImage from './../../../img/placeholderr.png'
 import { ImageLoaderProps } from "../../../data/props/ImageLoaderProps";
-import { validateImage } from "../../../components/Form/FormValidation";
-import { error } from "console";
+import { validateImage, validateImagem } from "../../../components/Form/FormValidation";
 
 //funcao que realiza o tratamento do campo de imagem
 export function ImageLoader(props: ImageLoaderProps) {
     const fileAnchor: any = useRef()
     const [errorMessage, setErrorMessage] = useState<boolean>(false)
+    const [messageUndefined, setMessageUndefined] = useState<boolean>(false)
     const [image, setImage] =  useState()
     const [renderedImage, setRenderedImage] = useState<any>(props.image)
 
@@ -41,8 +41,7 @@ export function ImageLoader(props: ImageLoaderProps) {
             <div style={{display: 'flex', flexDirection: "column", position: 'absolute', marginTop: '150px'}}>
                 {errorMessage === true ? <p style={{ color: 'red', lineHeight: '5px'}}>Formato Invalido!</p> : <></>}
             </div>
-            
-            
+             
         </div>
     )
 }
